@@ -1,0 +1,39 @@
+Sub FaultDetailOutput()
+'
+' FaultDetailOutput 宏
+'
+
+'
+
+Sheet2.Select
+
+Range("a:f").ClearContents
+
+
+
+Sheet3.Select
+
+Range("a:j").ClearContents
+Sheet4.Select
+
+Range("a:k").ClearContents
+
+
+Sheet5.Select
+
+Range("a2:k999").ClearContents
+
+
+
+Call FliterList
+
+Call VariousManipulates
+
+
+Call AlarmConcatenate
+
+Call FaultDetails
+
+
+
+End Sub

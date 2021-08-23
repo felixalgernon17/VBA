@@ -1,0 +1,267 @@
+Sub AlarmConcatenate()
+'
+' AlarmConcatnate
+'
+
+'
+Dim RowI As Integer, ColumnJ As Integer, LocationK As Integer, RowM As Integer, ColumnN As Integer, k As Integer, l As Integer, LocationL As Integer
+
+
+Dim LocationT As Integer
+
+Dim CountyName1 As String
+Dim CountyName2 As String
+Dim CountyName3 As String
+
+Dim PriorityOfNetwork1 As String
+Dim PriorityOfNetwork2 As String
+
+Dim FaultLocation(20) As String
+
+Dim NetPriority(20) As String
+
+Dim StartedTimeLocation(20) As Double
+
+
+
+
+
+
+Dim DeleteComma As String
+
+
+Dim Time1 As Double
+
+
+
+Dim Time2 As Double
+
+Dim TimeDifference As Double
+
+
+Dim LessThanOneHour As Boolean
+
+
+
+
+
+RowI = 2
+ColumnJ = 1
+LocationK = 1
+LocationL = 1
+LocationT = 1
+
+FaultLocation(1) = ""
+
+ NetPriority(1) = ""
+ StartedTimeLocation(1) = 0
+ 
+ 
+
+k = 1
+l = 1
+l = 1
+
+
+
+
+CountyName1 = ""
+CountyName2 = ""
+CountyName3 = ""
+PriorityOfNetwork1 = ""
+
+PriorityOfNetwork2 = ""
+
+
+Sheet3.Select
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+     CountyName1 = Cells(RowI - 1, ColumnJ + 2)
+  CountyName2 = Cells(RowI, ColumnJ + 2)
+   CountyName3 = Cells(RowI + 1, ColumnJ + 2)
+  Time1 = Cells(RowI - 1, ColumnJ)
+  Time2 = Cells(RowI, ColumnJ)
+
+  TimeDifference = Time2 - Time1
+  
+  PriorityOfNetwork1 = Cells(RowI - 1, ColumnJ + 3)
+  PriorityOfNetwork2 = Cells(RowI, ColumnJ + 3)
+  
+
+
+LessThanOneHour = TimeDifference <= 0.041
+
+
+
+
+
+
+
+  Do While CountyName1 = CountyName2 And LessThanOneHour
+ 
+
+
+  
+If PriorityOfNetwork1 = Cells(2, 11).Value And PriorityOfNetwork2 = Cells(1, 11).Value Then
+ 
+    
+    FaultLocation(LocationK) = Cells(RowI, ColumnJ + 4).Value + "#" + Cells(RowI - 1, ColumnJ + 4).Value
+  
+  
+Else
+    
+    FaultLocation(LocationK) = Cells(RowI - 1, ColumnJ + 4).Value + "#" + Cells(RowI, ColumnJ + 4).Value
+    
+End If
+
+                 Cells(RowI - 1, ColumnJ + 6).Value = "Will Be Connected"
+         
+     NetPriority(LocationL) = Cells(RowI, ColumnJ + 3).Value + "#" + Cells(RowI - 1, ColumnJ + 3).Value
+     
+     StartedTimeLocation(LocationT) = Cells(RowI - 1, ColumnJ)
+          
+        RowI = RowI + 1
+        LocationK = LocationK + 1
+          
+        LocationL = LocationL + 1
+
+        LocationT = LocationT + 1
+         
+
+
+  If CountyName2 <> CountyName3 Then
+    
+     Cells(RowI - 1, ColumnJ + 6).Value = "The END of Concatenateion"
+
+     
+          Cells(RowI - 1, ColumnJ + 7).Value = Join(FaultLocation)
+          
+          Cells(RowI - 1, ColumnJ + 8).Value = Join(NetPriority)
+       
+       
+          Cells(RowI - 1, ColumnJ + 9).Value = StartedTimeLocation(1)
+          Cells(RowI - 1, ColumnJ + 9).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+   
+For k = 1 To 20
+
+  FaultLocation(k) = ""
+  NetPriority(k) = ""
+   StartedTimeLocation(k) = 0
+Next k
+
+     
+  End If
+
+  k = 1
+  
+         CountyName1 = Cells(RowI - 1, ColumnJ + 2)
+  CountyName2 = Cells(RowI, ColumnJ + 2)
+  
+  Time1 = Cells(RowI - 1, ColumnJ)
+  Time2 = Cells(RowI, ColumnJ)
+ 
+  TimeDifference = Time2 - Time1
+   CountyName3 = Cells(RowI + 1, ColumnJ + 2)
+  PriorityOfNetwork1 = Cells(RowI - 1, ColumnJ + 3)
+  PriorityOfNetwork2 = Cells(RowI, ColumnJ + 3)
+  
+LessThanOneHour = TimeDifference <= 0.041
+
+
+  
+        
+  Loop
+  
+  
+  
+  
+   RowI = RowI + 1
+  
+     LocationK = 1
+     
+     LocationL = 1
+     
+    LocationT = 1
+       
+     
+  Loop
+  
+  
+'editing sheet3
+
+
+  
+  
+
+  
+
+  Sheet3.Select
+
+
+
+  RowI = 2
+  ColumnJ = 1
+  RowM = 2
+  ColumnN = 1
+  
+  
+  
+  
+
+  
+
+  Do While Cells(RowI, ColumnJ) <> ""
+
+   If Cells(RowI, ColumnJ + 6) = "" Then
+
+
+  Sheet4.Cells(RowM, ColumnN) = Sheet3.Cells(RowI, ColumnJ)
+  Sheet4.Cells(RowM, ColumnN).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+  Sheet4.Cells(RowM, ColumnN + 1) = Sheet3.Cells(RowI, ColumnJ + 1)
+  Sheet4.Cells(RowM, ColumnN + 1).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+  Sheet4.Cells(RowM, ColumnN + 2) = Sheet3.Cells(RowI, ColumnJ + 2)
+  Sheet4.Cells(RowM, ColumnN + 3) = Sheet3.Cells(RowI, ColumnJ + 3)
+  Sheet4.Cells(RowM, ColumnN + 4) = Sheet3.Cells(RowI, ColumnJ + 4)
+   Sheet4.Cells(RowM, ColumnN + 5) = Sheet3.Cells(RowI, ColumnJ + 5)
+
+
+
+
+
+
+ ElseIf Cells(RowI, ColumnJ + 6) = "The END of Concatenateion" Then
+   Sheet4.Cells(RowM, ColumnN) = Sheet3.Cells(RowI, ColumnJ + 9)
+  Sheet4.Cells(RowM, ColumnN).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+  Sheet4.Cells(RowM, ColumnN + 1) = Sheet3.Cells(RowI, ColumnJ + 1)
+  Sheet4.Cells(RowM, ColumnN + 1).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+   Sheet4.Cells(RowM, ColumnN + 2) = Sheet3.Cells(RowI, ColumnJ + 2)
+  Sheet4.Cells(RowM, ColumnN + 3) = Sheet3.Cells(RowI, ColumnJ + 3)
+  Sheet4.Cells(RowM, ColumnN + 4) = Sheet3.Cells(RowI, ColumnJ + 7)
+   Sheet4.Cells(RowM, ColumnN + 5) = Sheet3.Cells(RowI, ColumnJ + 5)
+
+   If InStr(1, Sheet3.Cells(RowI, ColumnJ + 8), Sheet3.Cells(1, 11).Value) <> 0 Then
+   
+   
+ 
+
+   Sheet4.Cells(RowM, ColumnN + 3) = Sheet3.Cells(1, 11).Value
+   End If
+   
+
+End If
+ RowM = RowM + 1
+RowI = RowI + 1
+
+
+
+  Loop
+
+
+Sheet4.Select
+
+Range("a:f").Sort key1:=Range("a1"), Order1:=xlAscending, Header:=xlYes
+
+'copying to sheet4
+
+End Sub

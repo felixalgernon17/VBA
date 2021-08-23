@@ -1,0 +1,83 @@
+Sub CreatWord()
+'
+' CreatWord ?
+'
+
+'
+
+'
+Dim RowI, ColumnJ, RelatedToPTN As Integer
+
+Dim DocumentNames As String
+
+
+Application.ScreenUpdating = False
+
+RowI = 2
+ColumnJ = 4
+
+DocumentNames = ""
+RelatedToPTN = 0
+
+
+Sheet1.Activate
+
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+ DocumentNames = Left(Cells(RowI, ColumnJ + 2), 12)
+ 
+RelatedToPTN = InStr(1, Cells(RowI, ColumnJ + 2), "PTN")
+If RelatedToPTN <> 0 And Cells(RowI, ColumnJ + 7) = "" Then
+
+
+Set wordAppl = CreateObject("Word.Application")
+
+With wordAppl
+
+.Visible = False
+.Documents.Open ThisWorkbook.Path & "/" & "EmptyTemplate4.docx"
+
+Set myRange = .ActiveDocument.Tables(1)
+
+With myRange
+
+
+.Cell(2, 1).Range.Text = Sheet1.Cells(RowI, ColumnJ) + "_" + Cells(RowI, ColumnJ + 1)
+             
+                 If InStr(1, Sheet1.Cells(RowI, ColumnJ + 2), ",") <> 0 Then
+                 
+                 .Cell(2, 2).Range.Text = Left(Sheet1.Cells(RowI, ColumnJ + 2), InStr(1, Sheet1.Cells(RowI, ColumnJ + 2), ","))
+                 Else
+                 .Cell(2, 2).Range.Text = Sheet1.Cells(RowI, ColumnJ + 2)
+                 End If
+                 
+                 .Cell(2, 3).Range.Text = Sheet1.Cells(RowI, ColumnJ + 4)
+                 .Cell(2, 4).Range.Text = Sheet1.Cells(RowI, ColumnJ + 5)
+                 
+
+
+
+
+
+
+
+End With
+
+.ActiveDocument.SaveAs ThisWorkbook.Path & "/" & DocumentNames & ".doc"
+ .Documents.Close
+  
+.Quit
+
+End With
+
+End If
+
+
+RowI = RowI + 1
+
+
+
+
+Loop
+End Sub

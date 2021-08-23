@@ -1,0 +1,121 @@
+Sub ConnectCount()
+'
+' ConnectCount 岹
+'
+
+'
+
+
+
+
+'
+
+'
+Dim RowI As Integer, ColumnJ As Integer, CountK As Integer, LocationL As Integer, i As Integer
+
+
+
+
+
+Dim ConnectedCells(20) As String
+
+RowI = 3
+ColumnJ = 7
+
+LocationL = 1
+
+CountK = 1
+
+Sheet4.Select
+
+
+For i = 1 To 20
+
+
+ConnectedCells(i) = ""
+
+
+
+Next i
+
+
+
+
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+ColumnJ = 7
+
+LocationL = 1
+
+
+
+
+  Do While Cells(RowI, ColumnJ) <> ""
+ 
+
+
+ConnectedCells(LocationL) = Cells(RowI, ColumnJ)
+
+
+
+
+
+
+
+
+
+
+
+  
+ 
+
+  ColumnJ = ColumnJ + 1
+  
+   LocationL = LocationL + 1
+  Loop
+  
+  
+  
+  
+  
+  
+  
+Cells(RowI, 26) = Join(ConnectedCells, ",")
+
+
+ 
+  
+   RowI = RowI + 1
+  
+  
+  
+For i = 1 To 20
+
+
+ConnectedCells(i) = ""
+
+
+
+Next i
+
+LocationL = 1
+
+     
+  Loop
+  
+  
+
+
+  
+  
+
+  
+
+
+  
+  
+  
+  
+
+End Sub

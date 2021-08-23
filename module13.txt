@@ -1,0 +1,41 @@
+Sub DataInput()
+'
+' DataInput 宏
+'
+
+'
+    With ActiveSheet.ListObjects.Add(SourceType:=0, Source:= _
+        "ODBC;DSN=Excel Files;DBQ=D:\download\statfaultdeal.xls;DefaultDir=D:\download;DriverId=1046;MaxBufferSize=2048;PageTimeout=5;" _
+        , Destination:=Range("$A$1")).QueryTable
+        .CommandText = Array( _
+        "SELECT `Sheet0$`.故障开始时间, `Sheet0$`.故障结束时间, `Sheet0$`.故障历时时间, `Sheet0$`.告警清除时间, `Sheet0$`.地市, `Sheet0$`.区县, `Sheet0$`.接单时间, `Sheet0$`.接单历时, `Sheet0$`.最终回复时间, `" _
+        , _
+        "Sheet0$`.回复历时, `Sheet0$`.`网络分类(一级)`, `Sheet0$`.工单状态, `Sheet0$`.告警级别, `Sheet0$`.故障设备厂商, `Sheet0$`.`网络分类(三级)`, `Sheet0$`.网元名称, `Sheet0$`.故障主题, `Sheet0$`.故障原因, `" _
+        , _
+        "Sheet0$`.受理部门, `Sheet0$`.派单人, `Sheet0$`.转省内EOMS工单流水号, `Sheet0$`.派单时间, `Sheet0$`.派单历时, `Sheet0$`.归档时间, `Sheet0$`.归档历时, `Sheet0$`.运行状态, `Sheet0$`.故障原因类别, `Sheet0" _
+        , _
+        "$`.故障原因细分, `Sheet0$`.最终处理措施, `Sheet0$`.归档方式, `Sheet0$`.接单人, `Sheet0$`.接单人ID, `Sheet0$`.接单人部门, `Sheet0$`.回复人, `Sheet0$`.回复人ID, `Sheet0$`.回复人部门, `Sheet0$`.是否WAP回" _
+        , _
+        "单, `Sheet0$`.AB角ID, `Sheet0$`.AB角名称" & Chr(13) & "" & Chr(10) & "FROM `D:\download\statfaultdeal.xls`.`Sheet0$` `Sheet0$`" _
+        )
+        .RowNumbers = False
+        .FillAdjacentFormulas = False
+        .PreserveFormatting = True
+        .RefreshOnFileOpen = False
+        .BackgroundQuery = True
+        .RefreshStyle = xlInsertDeleteCells
+        .SavePassword = False
+        .SaveData = True
+        .AdjustColumnWidth = True
+        .RefreshPeriod = 0
+        .PreserveColumnInfo = True
+        .ListObject.DisplayName = "表_查询来自_Excel_Files6"
+        .Refresh BackgroundQuery:=False
+    End With
+    
+    
+    
+    
+    
+    
+End Sub

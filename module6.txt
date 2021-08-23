@@ -1,0 +1,272 @@
+Sub FaultDetails()
+'
+' FaultDetails 岹
+'
+
+'
+
+
+Dim RowI As Integer, ColumnJ As Integer, LocationK As Integer, RowM As Integer, ColumnN As Integer
+
+
+Dim ListNo As Integer
+
+
+
+
+Dim FaultCatalogue(20) As String
+
+FaultCatalogue(1) = "光纤受损、老化"
+FaultCatalogue(2) = "尾纤受损、老化"
+
+FaultCatalogue(3) = "车辆挂断"
+
+
+FaultCatalogue(4) = "连接器"
+
+FaultCatalogue(5) = "人为剪断"
+
+
+FaultCatalogue(6) = "火烧断"
+
+FaultCatalogue(7) = "施工挖断"
+
+
+FaultCatalogue(8) = "自然灾害"
+
+
+FaultCatalogue(9) = "动物咬断"
+
+FaultCatalogue(10) = "枪击"
+
+
+FaultCatalogue(11) = "设备"
+
+FaultCatalogue(12) = "停电"
+
+
+FaultCatalogue(13) = "倒杆"
+
+
+FaultCatalogue(14) = "误操作"
+
+
+Dim FaultNo As Integer
+
+Dim FaultNames As String
+
+
+
+ListNo = 1
+
+
+
+
+
+
+Sheet4.Select
+
+
+
+RowI = 2
+ColumnJ = 1
+RowM = 2
+ColumnN = 6
+
+
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+
+Sheet5.Cells(RowM, ColumnN) = Cells(RowI, ColumnJ)
+Sheet5.Cells(RowM, ColumnN + 1) = Cells(RowI, ColumnJ + 1)
+
+
+
+Sheet5.Cells(RowM, ColumnN - 1) = Cells(RowI, ColumnJ)
+
+Sheet5.Cells(RowM, ColumnN - 1).NumberFormatLocal = "yyyy/mm/dd "
+
+
+
+Sheet5.Cells(RowM, ColumnN + 2) = (Cells(RowI, ColumnJ + 1) - Cells(RowI, ColumnJ)) * 1440
+
+
+
+Sheet5.Cells(RowM, ColumnN).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+Sheet5.Cells(RowM, ColumnN + 1).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+
+
+If Sheet5.Cells(RowM, ColumnN + 2) >= 360 Then
+Sheet5.Cells(RowM, ColumnN + 3) = "是"
+
+Else
+Sheet5.Cells(RowM, ColumnN + 3) = "否"
+
+End If
+
+'Deal with time
+
+Sheet5.Cells(RowM, ColumnN + 4) = Cells(RowI, ColumnJ + 4)
+
+Sheet5.Cells(RowM, ColumnN + 5) = Cells(RowI, ColumnJ + 5)
+
+Sheet5.Cells(RowM, ColumnN - 3) = Cells(RowI, ColumnJ + 3)
+
+Sheet5.Cells(RowM, ColumnN - 4) = Cells(RowI, ColumnJ + 2)
+
+If InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "光纤") <> 0 Then
+
+FaultNames = "光纤受损"
+
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "尾纤") <> 0 Then
+
+
+FaultNames = "尾纤受损"
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "车辆") <> 0 Then
+
+FaultNames = "车辆挂断"
+
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "连接") <> 0 Then
+
+FaultNames = "连接器"
+
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "剪断") <> 0 Then
+
+FaultNames = "人为剪断"
+
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "火") <> 0 Then
+
+FaultNames = "火烧断"
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "施工") <> 0 Then
+
+FaultNames = "施工挖断"
+
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "灾") <> 0 Then
+
+FaultNames = "自然灾害"
+
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "咬") <> 0 Then
+
+FaultNames = "动物咬断"
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "枪") <> 0 Then
+
+FaultNames = "枪击"
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "设备") <> 0 Then
+
+FaultNames = "设备"
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "电") <> 0 Then
+
+FaultNames = "停电"
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "杆") <> 0 Then
+
+FaultNames = "倒杆"
+
+ElseIf InStr(1, Sheet5.Cells(RowM, ColumnN + 5), "误") <> 0 Then
+
+FaultNames = "误操作"
+
+
+
+End If
+
+
+
+
+Select Case FaultNames
+
+
+        Case "光纤受损"
+            FaultNo = 1
+        Case "尾纤受损"
+            FaultNo = 2
+        Case "车辆挂断"
+            FaultNo = 3
+        Case "连接器"
+            FaultNo = 4
+            
+Case "人为剪断"
+            FaultNo = 5
+            
+Case "火烧断"
+            FaultNo = 6
+            
+Case "施工挖断"
+            FaultNo = 7
+            
+Case "自然灾害"
+            FaultNo = 8
+            
+            
+            Case "动物咬断"
+            FaultNo = 9
+            
+            Case "枪击"
+            FaultNo = 10
+            
+Case "设备"
+            FaultNo = 11
+            Case "停电"
+            FaultNo = 12
+            
+            Case "倒杆"
+            FaultNo = 13
+            
+            
+            Case "误操作"
+            FaultNo = 14
+            
+            Case Else
+           FaultNo = 3
+
+            
+            
+            
+            
+            
+            
+End Select
+
+
+Sheet5.Cells(RowM, ColumnN - 2) = FaultCatalogue(FaultNo)
+
+
+Sheet5.Cells(RowM, ColumnN - 5) = ListNo
+
+
+
+
+ListNo = ListNo + 1
+
+
+Sheet5.Cells(RowM, ColumnN + 7) = 1
+
+
+RowM = RowM + 1
+
+
+RowI = RowI + 1
+
+Loop
+
+
+
+
+
+
+
+
+
+End Sub

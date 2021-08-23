@@ -1,0 +1,123 @@
+Sub ConnectSheets()
+'
+' ConnectSheets 岹
+'
+
+'
+
+
+Dim RowI As Integer, ColumnJ As Integer, CountK As Integer, LocationL As Integer, i As Integer
+
+
+
+
+
+Dim ConnectedCells(20) As String
+
+Dim ConnectedCellsStrings As String
+
+
+
+RowI = 3
+ColumnJ = 7
+
+LocationL = 1
+
+CountK = 1
+
+ Sheets("SheetX").Select
+
+
+For i = 1 To 20
+
+
+ConnectedCells(i) = ""
+
+
+
+Next i
+
+
+
+
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+
+
+
+
+
+
+
+  Do While Cells(RowI, ColumnJ) <> ""
+ 
+
+If Cells(RowI, ColumnJ + 1) <> "" And Cells(RowI, ColumnJ + 2) <> "" Then
+ConnectedCells(LocationL) = Cells(RowI, ColumnJ) + "," + Cells(RowI, ColumnJ + 1) + ","
+
+ElseIf Cells(RowI, ColumnJ + 1) = "" Then
+ConnectedCells(LocationL) = Cells(RowI, ColumnJ)
+
+Else
+ConnectedCells(LocationL) = Cells(RowI, ColumnJ) + "," + Cells(RowI, ColumnJ + 1)
+End If
+
+
+
+
+
+
+
+
+
+
+
+  
+ 
+
+  ColumnJ = ColumnJ + 2
+  
+   LocationL = LocationL + 1
+  Loop
+  
+  
+  
+  
+  
+  
+  
+Cells(RowI, 26) = Join(ConnectedCells)
+
+
+ 
+  
+   RowI = RowI + 1
+  
+  
+  
+For i = 1 To 20
+
+
+ConnectedCells(i) = ""
+
+
+
+Next i
+
+LocationL = 1
+
+    ColumnJ = 7
+    
+    
+    
+    
+  Loop
+  
+  
+
+
+  
+
+
+End Sub

@@ -1,0 +1,57 @@
+Sub FormateNumber()
+'
+' FormateNumber 岹
+'
+
+'
+    Selection.TextToColumns Destination:=Range("A1"), DataType:=xlDelimited, _
+        TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+        Semicolon:=False, Comma:=False, Space:=False, Other:=False, FieldInfo _
+        :=Array(1, 1), TrailingMinusNumbers:=True
+    Columns("B:B").Select
+    Selection.TextToColumns Destination:=Range("B1"), DataType:=xlDelimited, _
+        TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+        Semicolon:=False, Comma:=False, Space:=False, Other:=False, FieldInfo _
+        :=Array(1, 1), TrailingMinusNumbers:=True
+End Sub
+Sub OneForAll()
+'
+' OneForAll 岹
+'
+
+'
+
+Sheet2.Select
+
+Range("a:f").ClearContents
+
+
+
+Sheet3.Select
+
+Range("a:j").ClearContents
+Sheet4.Select
+
+Range("a:k").ClearContents
+
+
+Sheet5.Select
+
+Range("a2:k999").ClearContents
+
+Sheet11.Select
+
+Range("a2:m999").ClearContents
+
+Call FliterList
+
+Call VariousManipulates
+
+
+Call AlarmConcatenate
+
+Call FaultDetails
+
+Call CountIfCounties
+
+End Sub

@@ -1,0 +1,77 @@
+Sub FliterList()
+'
+'
+'
+
+'
+Dim RowI As Integer, ColumnJ As Integer, RowM As Integer, ColumnN As Integer, k As Integer
+
+
+
+Dim TheListofManufacturers As String
+Dim WeDontTakeCareofPon    As String
+
+
+
+
+
+
+
+
+
+RowI = 2
+ColumnJ = 1
+
+
+
+RowM = 2
+ColumnN = 1
+
+TheListofManufacturers = ""
+
+WeDontTakeCareofPon = ""
+
+Sheet1.Select
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+TheListofManufacturers = Cells(RowI, ColumnJ + 13)
+
+WeDontTakeCareofPon = InStr(1, Cells(RowI, ColumnJ + 14), "PON")
+
+
+ If TheListofManufacturers <> "" And WeDontTakeCareofPon = 0 Then
+ 
+
+
+  Sheet2.Cells(RowM, ColumnN) = Sheet1.Cells(RowI, ColumnJ)
+  Sheet2.Cells(RowM, ColumnN).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+  Sheet2.Cells(RowM, ColumnN + 1) = Sheet1.Cells(RowI, ColumnJ + 1)
+  Sheet2.Cells(RowM, ColumnN + 1).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+  Sheet2.Cells(RowM, ColumnN + 2) = Sheet1.Cells(RowI, ColumnJ + 5)
+  Sheet2.Cells(RowM, ColumnN + 3) = Sheet1.Cells(RowI, ColumnJ + 11)
+  Sheet2.Cells(RowM, ColumnN + 4) = Sheet1.Cells(RowI, ColumnJ + 13)
+  Sheet2.Cells(RowM, ColumnN + 5) = Sheet1.Cells(RowI, ColumnJ + 14)
+  
+
+  RowM = RowM + 1
+End If
+
+
+
+  RowI = RowI + 1
+
+
+
+Loop
+k = 1
+
+For k = 1 To 6
+Sheet2.Cells(1, k) = ""
+
+Next
+
+
+
+
+End Sub

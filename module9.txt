@@ -1,0 +1,60 @@
+Sub TheLastResort()
+'
+' TheLastResort 宏
+'
+
+'
+ 
+ Dim RowI As Integer, ColumnJ As Integer, LocationK As Integer, RowM As Integer, ColumnN As Integer, x As Integer, y As Integer, RowNo As Integer, ColumnNo As Integer
+ 
+   
+    
+    
+Sheet11.Select
+
+RowI = 2
+
+ColumnJ = 11
+RowM = 2
+
+ColumnN = 2
+
+
+
+
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+Sheet12.Cells(RowM, ColumnN) = Cells(RowI, ColumnJ)
+
+
+Sheet12.Cells(RowM, ColumnN + 1) = Cells(RowI, ColumnJ + 1)
+
+Sheet12.Cells(RowM, ColumnN + 2) = Cells(RowI, ColumnJ + 2)
+Sheet12.Cells(RowM + 18, ColumnN).NumberFormatLocal = "0.00_ "
+
+Sheet12.Cells(RowM + 18, ColumnN) = CStr(Cells(RowI, ColumnJ)) + "/" + CStr(Cells(RowI, ColumnJ + 1)) + "/" + CStr(Cells(RowI, ColumnJ + 2))
+
+
+RowI = RowI + 1
+RowM = RowM + 1
+Loop
+
+Sheet12.Select
+
+
+ Cells(2, 5) = 1 - (((Cells(2, 2) + Cells(2, 3)) * 0.3 * 0.4) + (Cells(2, 4) * 0.1 * 0.4))
+ 
+ Cells(3, 5) = 1 - (((Cells(3, 2) + Cells(3, 3)) * 0.3 * 0.4) + (Cells(3, 4) * 0.1 * 0.4))
+ 
+ Cells(4, 5) = 1 - (((Cells(4, 2) + Cells(4, 3)) * 0.3 * 0.4) + (Cells(4, 4) * 0.1 * 0.4))
+ 
+ Cells(5, 5) = 1 - (((Cells(5, 2) + Cells(5, 3)) * 0.3 * 1) + (Cells(5, 4) * 0.1 * 1))
+ 
+ Cells(6, 5) = 1 - (((Cells(6, 2) + Cells(6, 3)) * 0.3 * 0.6) + (Cells(6, 4) * 0.1 * 0.6))
+ 
+  
+
+    
+    
+End Sub

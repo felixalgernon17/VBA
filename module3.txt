@@ -1,0 +1,178 @@
+Sub VariousManipulates()
+'
+' VariousManipulates 岹
+'
+
+'
+Dim RowI As Integer, ColumnJ As Integer, RowM As Integer, ColumnN As Integer
+Dim CountyName As String
+
+
+
+
+
+
+
+
+
+
+
+
+RowI = 2
+ColumnJ = 1
+
+
+
+
+
+
+Sheet2.Select
+
+
+
+
+Range("a:f").Sort key1:=Range("a1"), Order1:=xlAscending, Header:=xlYes
+
+
+
+
+
+
+'Sort lines according time
+
+
+
+
+
+CountyName = ""
+
+
+RowI = 2
+ColumnJ = 1
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+
+Cells(RowI, ColumnJ + 2) = Left(Cells(RowI, ColumnJ + 2), 2)
+
+'delete name chareates to 2
+
+
+
+If Cells(RowI, ColumnJ + 2) = Cells(1, 10) Then
+
+Cells(RowI, ColumnJ + 2) = Cells(RowI, ColumnJ + 2) & Cells(1, 11)
+
+End If
+'jiujiang xian county name add xian
+
+
+
+If Cells(RowI, ColumnJ + 3) = Cells(1, 12) Then
+
+Cells(RowI, ColumnJ + 3) = Cells(1, 13)
+
+Else
+Cells(RowI, ColumnJ + 3) = Cells(1, 14)
+
+End If
+
+'Network Priority acees network or backbone network
+
+
+
+
+
+
+Cells(RowI, ColumnJ + 4) = Right(Cells(RowI, ColumnJ + 4), Len(Cells(RowI, ColumnJ + 4)) - InStr(1, Cells(RowI, ColumnJ + 4), ";"))
+
+'delete uwanted alarm infomations start with ;
+
+
+
+
+
+
+  RowI = RowI + 1
+
+
+
+Loop
+
+
+
+RowI = 2
+ColumnJ = 1
+RowM = 2
+ColumnN = 1
+
+
+Sheet2.Select
+
+Do While Cells(RowI, ColumnJ) <> ""
+
+If InStr(1, Cells(RowI, ColumnJ + 4), "LOS") <> 0 Then
+
+  Sheet3.Cells(RowM, ColumnN) = Sheet2.Cells(RowI, ColumnJ)
+  Sheet3.Cells(RowM, ColumnN).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+  Sheet3.Cells(RowM, ColumnN + 1) = Sheet2.Cells(RowI, ColumnJ + 1)
+  Sheet3.Cells(RowM, ColumnN + 1).NumberFormatLocal = "yyyy/mm/dd hh:mm:ss"
+  Sheet3.Cells(RowM, ColumnN + 2) = Sheet2.Cells(RowI, ColumnJ + 2)
+  Sheet3.Cells(RowM, ColumnN + 3) = Sheet2.Cells(RowI, ColumnJ + 3)
+  Sheet3.Cells(RowM, ColumnN + 4) = Sheet2.Cells(RowI, ColumnJ + 4)
+  Sheet3.Cells(RowM, ColumnN + 5) = Sheet2.Cells(RowI, ColumnJ + 5)
+
+
+
+
+End If
+
+RowI = RowI + 1
+RowM = RowM + 1
+
+Loop
+
+'delete uwanted alarms are not los  ;
+
+
+
+
+Sheet3.Select
+RowM = 1
+ColumnN = 1
+
+
+Do While Cells(RowM, ColumnN) <> ""
+Sheet3.Cells(RowM, ColumnN).NumberFormatLocal = "0.00"
+
+Sheet3.Cells(RowM, ColumnN + 1).NumberFormatLocal = "0.00"
+
+
+
+RowM = RowM + 1
+Loop
+
+'
+'formate cell value into numbers  ;
+
+
+
+ Columns("A:A").Select
+    Selection.TextToColumns Destination:=Range("A1"), DataType:=xlDelimited, _
+        TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+        Semicolon:=False, Comma:=False, Space:=False, Other:=False, FieldInfo _
+        :=Array(1, 1), TrailingMinusNumbers:=True
+
+Columns("B:B").Select
+    Selection.TextToColumns Destination:=Range("B1"), DataType:=xlDelimited, _
+        TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=True, _
+        Semicolon:=False, Comma:=False, Space:=False, Other:=False, FieldInfo _
+        :=Array(1, 1), TrailingMinusNumbers:=True
+
+'   make number formate validate  ;
+   
+   
+Range("a:h").Sort key1:=Range("a1"), Order1:=xlAscending, Header:=xlYes
+        
+
+End Sub

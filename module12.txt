@@ -1,0 +1,49 @@
+Sub ClearAll()
+'
+' ClearAll 宏
+'
+
+'
+    Range("表_查询来自_Excel_Files").Select
+    Range("C12").Activate
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    Selection.ListObject.ListColumns(1).Delete
+    ActiveWindow.SmallScroll Down:=-9
+End Sub

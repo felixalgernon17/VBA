@@ -1,0 +1,208 @@
+Private Sub CommandButton1_Click()
+
+End Sub
+
+Private Sub ClearAllDate_Click()
+Sheet1.Select
+ 
+    
+ Sheets("输入").Cells.ClearContents
+ 
+ 
+End Sub
+
+Private Sub DataInput_Click()
+   
+Dim fdX As FileDialog, currentSheet As Worksheet, tableName As String
+    Dim selectStr As String, whereStr As String, orderStr As String, commandStr As String, colTitleStr As String
+    Dim selectArray, orderArray, whereDictionary
+   
+    Set fdX = Application.FileDialog(msoFileDialogFilePicker)
+    Set currentSheet = ThisWorkbook.Worksheets("输入")
+    tableName = "Sheet0"
+   
+    With fdX
+        .AllowMultiSelect = False   '单选择
+        .Filters.Clear   '清除文件过滤器
+        .Filters.Add "Excel Files", "*.xls;*.xlsx,*.xlsm"
+        .Title = "*********请选择工作簿文件*********"
+        .InitialFileName = ThisWorkbook.Path
+        If .Show = -1 Then
+            '定义单个文件变量
+            Dim vrtSelectedItemX As Variant
+            '定义循环变量
+            Dim i As Integer, tempCol As Integer
+            i = 1
+            '开始文件检索
+            For Each vrtSelectedItemX In .SelectedItems
+                    Dim tempwbX As Workbook
+                    Set tempwbX = Workbooks.Open(vrtSelectedItemX)
+                    'FileName = CreateObject("Scripting.FileSystemObject").GetFileName(vrtSelectedItemX)
+                    informationFileName = tempwbX.FullName
+                    informationFileNamePrefix = Left(informationFileName, Application.WorksheetFunction.Find(".", informationFileName))
+                    informationFileNameSuffix = Right(informationFileName, Len(informationFileName) - Len(informationFileNamePrefix))
+                    informationFileNameDir = Left(informationFileName, Application.WorksheetFunction.Find(":", informationFileName))
+                    For Each isht In tempwbX.Sheets
+                        '判断表名称、列表字段是否与预期保持一致
+                        If isht.Name = tableName Then
+                           '设置报表记录最大数，列字段最大数
+                           TempMaxRow = isht.Range("A65536").End(xlUp).Row
+                           TempMaxCol = isht.UsedRange.Columns.Count
+ 
+                           Set TEMPSheet = tempwbX.Sheets(tableName)
+                          
+                            '保存临时TEMP数据表列标题名称
+                            For tempCol = 1 To TempMaxCol
+                                If Trim(colTitleStr) = "" Then
+                                   colTitleStr = """" & TEMPSheet.Cells(1, tempCol).Text & """"
+                                Else
+                                   colTitleStr = colTitleStr & "," & """" & TEMPSheet.Cells(1, tempCol).Text & """"
+                                End If
+                            Next
+                           
+                            Debug.Print colTitleStr
+                           
+                        End If
+                   Next isht
+                    '关闭被打开的工作簿
+                    tempwbX.Close SaveChanges:=False
+            Next vrtSelectedItemX
+        End If
+    End With
+   
+    Set fdX = Nothing
+ 
+    currentSheet.Activate
+    currentSheet.Cells.Delete
+    '定义查询字段
+    selectArray = Array("故障开始时间", "故障结束时间", "故障历时时间", "告警清除时间", "地市", "区县", "接单时间", _
+    "接单历时", "最终回复时间", "回复历时", "工单状态", "告警级别", "故障设备厂商", "故障主题", "最终处理措施")
+ 
+    '构造查询字段列表
+    For Each tempStr In selectArray
+ 
+        If selectColTitle = "" Then
+            selectColTitle = "`A`." & tempStr
+        Else
+            selectColTitle = selectColTitle & ", `A`.`" & tempStr & "`"
+        End If
+    Next tempStr
+ 
+    '定义条件字段字典
+    Set whereDictionary = CreateObject("Scripting.Dictionary")
+    '添加关键字和值
+    whereDictionary.Add "级别", "ODU2"
+ 
+    '构造查询条件字段
+    For Each Key In whereDictionary
+ 
+        If whereColTitle = "" Then
+            whereColTitle = "`A`." & Key & " = '" & whereDictionary(Key) & "'"
+        Else
+            whereColTitle = whereColTitle & ", `A`." & Key & "='" & whereDictionary(Key) & "'"
+        End If
+ 
+    Next
+ 
+    '定义主排序字段
+    orderArray = Array("方向")
+ 
+    '构造排序字段列表
+    For Each tempStr In orderArray
+ 
+        If orderColTitle = "" Then
+            orderColTitle = "`A`." & tempStr
+        Else
+            orderColTitle = orderColTitle & ", `A`.`" & tempStr & "`"
+        End If
+    Next tempStr
+ 
+    '设置表名称Sheet1$的别名：A
+'    selectStr = "SELECT `A`.级别, `A`.业务类型, `A`.占用ODTUk时隙数, `A`.`业务速率(bit/s)`, `A`.方向, `A`.源通道, `A`.宿通道, `A`.激活状态, `A`.锁定状态, `A`.路径名称  FROM `" & informationFileName & "`.`Sheet1$` `A` "
+    selectStr = "SELECT " & selectColTitle & "  FROM `" & informationFileName & "`.`" & tableName & "$` `A` "
+ 
+    whereStr = "WHERE (" & whereColTitle & ")"
+ 
+    orderStr = "ORDER BY " & orderColTitle
+ 
+    commandStr = selectStr
+
+    Debug.Print whereStr
+    Debug.Print commandStr
+ 
+    With ActiveSheet.ListObjects.Add(SourceType:=0, Source:= _
+        "ODBC;DSN=Excel Files;DBQ=" & informationFileName & ";DefaultDir=" & informationFileNameDir & ";DriverId=1046;MaxBufferSize=4096;PageTimeout=5;" _
+        , Destination:=Range("$A$1")).QueryTable
+ 
+        .CommandType = xlCmdSql
+        .CommandText = Array(commandStr)
+        .FillAdjacentFormulas = False
+        .PreserveFormatting = True
+        .RefreshOnFileOpen = False
+        .BackgroundQuery = True
+        .RefreshStyle = xlInsertDeleteCells
+        .SavePassword = False
+        .SaveData = True
+        .AdjustColumnWidth = True
+        .RefreshPeriod = 0
+        .PreserveColumnInfo = True
+'        .ListObject.DisplayName = "表_查询来自_Excel_Files29"
+        .Refresh BackgroundQuery:=False
+    End With
+    
+    
+    
+    Sheet2.Select
+
+Range("a:f").ClearContents
+
+
+
+Sheet3.Select
+
+Range("a:j").ClearContents
+Sheet4.Select
+
+Range("a:k").ClearContents
+
+
+Sheet5.Select
+
+Range("a2:k999").ClearContents
+
+
+
+Call FliterList
+
+Call VariousManipulates
+
+
+Call AlarmConcatenate
+
+Call FaultDetails
+
+
+
+
+
+
+
+Me.Hide
+
+
+
+    
+    
+End Sub
+
+Private Sub UserForm_Click()
+
+
+
+End Sub
+
+Private Sub UserForm_Initialize()
+DataInput.Picture = LoadPicture("")
+
+
+End Sub

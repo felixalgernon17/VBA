@@ -1,0 +1,255 @@
+Sub CountIfCounties()
+'
+' CountIfCounties 宏
+'
+
+'
+
+
+Dim RowI As Integer, ColumnJ As Integer, LocationK As Integer, RowM As Integer, ColumnN As Integer, x As Integer, y As Integer, RowNo As Integer, ColumnNo As Integer, FoundItC As Integer, FoundItR As Integer
+
+
+
+
+
+
+
+
+
+
+
+
+Dim CountyNames(20) As String
+
+
+Dim NetPriority(5) As String
+
+
+Dim AlarmsByCounties(14, 3) As Integer
+
+
+
+
+CountyNames(1) = "九江县"
+CountyNames(2) = "德安"
+CountyNames(3) = "永修"
+CountyNames(4) = "庐山"
+CountyNames(5) = "星子"
+CountyNames(6) = "湖口"
+
+CountyNames(7) = "都昌"
+
+CountyNames(8) = "彭泽"
+CountyNames(9) = "瑞昌"
+
+
+CountyNames(10) = "武宁"
+
+CountyNames(11) = "修水"
+
+CountyNames(12) = "共青"
+
+CountyNames(13) = "十里"
+
+CountyNames(14) = "浔阳"
+
+NetPriority(1) = "骨干层"
+
+NetPriority(2) = "汇聚层"
+
+
+NetPriority(3) = "接入层"
+
+
+
+
+
+
+
+Dim FaultNo As Integer
+
+Dim FaultNames As String
+RowI = 2
+ColumnJ = 2
+
+RowM = 2
+ColumnN = 1
+
+
+For x = 1 To 14
+
+   For y = 1 To 3
+   
+   AlarmsByCounties(x, y) = 0
+   Next
+   
+
+Next
+
+
+
+
+
+
+
+
+Sheet5.Select
+
+Do While Cells(RowI, ColumnJ) <> 0
+
+Sheet11.Cells(RowM, ColumnN) = Cells(RowI, ColumnJ)
+
+Sheet11.Cells(RowM, ColumnN + 1) = Cells(RowI, ColumnJ + 1)
+
+Sheet11.Cells(RowM, ColumnN + 2) = Cells(RowI, ColumnJ + 11)
+
+
+RowI = RowI + 1
+
+RowM = RowM + 1
+
+
+Loop
+
+
+
+'initination of the sheet
+
+
+
+
+
+Sheet11.Select
+
+
+
+Dim i&, Myr&, Arr
+
+Dim d, k, t
+
+Set d = CreateObject("Scripting.Dictionary")
+
+Myr = Sheet11.[a65536].End(xlUp).Row
+
+Arr = Sheet11.Range("a1:c" & Myr)
+
+For i = 2 To UBound(Arr)
+
+d(Arr(i, 1) & Arr(i, 2)) = d(Arr(i, 1) & Arr(i, 2)) + Arr(i, 3)
+
+Next
+
+k = d.keys
+
+t = d.items
+
+[d2].Resize(d.Count, 1) = Application.Transpose(k)
+
+[e2].Resize(d.Count, 1) = Application.Transpose(t)
+
+Set d = Nothing
+
+
+'countif
+
+
+
+RowM = 2
+ColumnN = 4
+x = 0
+y = 0
+RowNo = 0
+ColumnNo = 0
+FoundItC = 0
+FoundItR = 0
+
+
+
+
+
+
+
+For x = 2 To 15
+
+
+
+  For y = 11 To 13
+   Cells(x, y) = 0
+
+
+  Next y
+
+
+
+
+
+Next x
+
+
+
+
+
+
+
+
+
+Do While Cells(RowM, ColumnN) <> 0
+
+For x = 1 To 14
+
+FoundItR = InStr(1, Cells(RowM, ColumnN), CountyNames(x))
+
+If FoundItR <> 0 Then
+
+
+RowNo = x
+
+
+
+Exit For
+
+End If
+
+
+Next
+
+
+For y = 1 To 3
+
+FoundItC = InStr(1, Cells(RowM, ColumnN), NetPriority(y))
+
+
+
+If FoundItC <> 0 Then
+
+
+ColumnNo = y
+
+
+
+Exit For
+
+End If
+
+
+Next
+
+
+Cells(RowNo + 1, ColumnNo + 10) = Cells(RowM, ColumnN + 1)
+
+
+
+
+
+
+RowM = RowM + 1
+
+Loop
+
+
+
+
+
+
+
+End Sub
